@@ -1,5 +1,11 @@
 # CHANGELOG
 
+## v1.1.4
+
+- Support for all `o` models
+- Removed `Clear my choice` in the api call
+- Code dependencies update
+
 ## v1.1.3
 
 - Added `base url` and `max token` in config (by dmunozv04)

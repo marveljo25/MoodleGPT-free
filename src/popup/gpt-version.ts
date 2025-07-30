@@ -40,7 +40,9 @@ export async function populateDatalistWithGptVersions() {
 
     const models = rep.data.filter(
       model =>
-        model.id.startsWith('gpt') || model.id.startsWith('o1') || model.id.startsWith('chatgpt')
+        model.id.startsWith('gpt') ||
+        model.id.search(/^o\d+/gi) !== -1 ||
+        model.id.startsWith('chatgpt')
     );
     models.sort((a, b) => b.id.localeCompare(a.id)); // we sort the model to get the best chatgpt version first
 
