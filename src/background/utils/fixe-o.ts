@@ -6,8 +6,8 @@ import { ChatCompletionCreateParamsNonStreaming } from 'openai/resources/chat/co
  * @param data
  * @returns
  */
-export function fixeO1(model: string, data: ChatCompletionCreateParamsNonStreaming) {
-  if (!model.startsWith('o1') && !model.startsWith('o3')) return data;
+export function fixeO(model: string, data: ChatCompletionCreateParamsNonStreaming) {
+  if (model.search(/^o\d+/gi) === -1) return data;
 
   if (data.max_tokens) {
     data.max_completion_tokens = data.max_tokens;

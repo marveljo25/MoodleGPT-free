@@ -3,7 +3,7 @@ import type GPTAnswer from '../types/gpt-answer';
 import normalizeText from 'background/utils/normalize-text';
 import getContentWithHistory from './get-content-with-history';
 import OpenAI from 'openai';
-import { fixeO1 } from '../utils/fixe-o1';
+import { fixeO } from '../utils/fixe-o';
 
 /**
  * Get the response from chatGPT api
@@ -30,7 +30,7 @@ async function getChatGPTResponse(
   });
 
   const req = await client.chat.completions.create(
-    fixeO1(config.model, {
+    fixeO(config.model, {
       model: config.model,
       messages: contentHandler.messages,
 

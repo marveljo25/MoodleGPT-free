@@ -20,6 +20,8 @@ function createAndNormalizeQuestion(questionContainer: HTMLElement) {
   if (attoText) {
     question = question.replace((attoText as HTMLElement).innerText, '');
   }
+  const clearMyChoice = questionContainer.querySelector('[role="button"]');
+  if (clearMyChoice) question = question.replace((clearMyChoice as HTMLElement).innerText, '');
 
   // Make tables more readable for chat-gpt
   const tables: NodeListOf<HTMLTableElement> = questionContainer.querySelectorAll('.qtext table');
