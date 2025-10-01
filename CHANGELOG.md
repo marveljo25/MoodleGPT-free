@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## v1.1.5
+
+- Support for gpt-5
+
 ## v1.1.4
 
 - Support for all `o` models

@@ -1,6 +1,6 @@
 {
   "name": "moodlegpt",
-  "version": "1.1.4",
+  "version": "1.1.5",
   "description": "This extension allows you to hide CHAT-GPT in a Moodle quiz.",
   "scripts": {
     "build": "npm run prettier && npm run lint && npm run fastBuild",
@@ -37,7 +37,7 @@
     "@typescript-eslint/parser": "^8.38.0",
     "eslint": "^9.32.0",
     "eslint-config-prettier": "^10.1.8",
-    "openai": "^5.11.0",
+    "openai": "^5.23.2",
     "prettier": "^3.6.2",
     "rollup": "^4.46.2",
     "rollup-plugin-ts": "^3.2.0",

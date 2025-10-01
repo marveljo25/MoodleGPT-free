@@ -2,15 +2,13 @@
   "compilerOptions": {
     "strict": true,
     "baseUrl": "src",
-    "module": "ESNext",
+    "module": "esnext",
+    "target": "ES6",
     "esModuleInterop": true,
     "allowSyntheticDefaultImports": true,
-    "target": "ES6",
     "noImplicitAny": true,
-    "moduleResolution": "node",
     "sourceMap": true,
     "outDir": "extension",
-    "resolveJsonModule": true,
     "types": ["node", "chrome"],
     "typeRoots": ["node_modules/@types"],
     "strictBindCallApply": true
