@@ -9,11 +9,6 @@ import { ChatCompletionCreateParamsNonStreaming } from 'openai/resources/chat/co
 export function fixeO(model: string, data: ChatCompletionCreateParamsNonStreaming) {
   if (model.search(/^o\d+/gi) === -1) return data;
 
-  if (data.max_tokens) {
-    data.max_completion_tokens = data.max_tokens;
-    delete data.max_tokens;
-  }
-
   if (data.temperature) delete data.temperature;
 
   if (data.top_p) delete data.top_p;
