@@ -1,14 +1,16 @@
 import type Config from '../types/config';
 import imageToBase64 from 'background/utils/image-to-base64';
-import isGPTModelGreaterOrEqualTo4 from 'background/utils/version-support-images';
-import { ChatCompletionMessageParam, ChatCompletionUserMessageParam } from 'openai/resources';
-
 // The attempt and the cmid allow us to identify a quiz
+type Message = {
+  role: 'system' | 'user' | 'assistant';
+  content: any; // string or multimodal object
+};
+
 type History = {
   host: string;
-  cmid: string; // The id of the quiz
-  attempt: string; // The attempt of the current quiz
-  history: ChatCompletionMessageParam[];
+  cmid: string;
+  attempt: string;
+  history: Message[];
 };
 
 const INSTRUCTION: string = `
@@ -25,11 +27,10 @@ Act as a quiz solver for the best notation with the following rules:
 - Always respond in the same language as the user's question.
 `.trim();
 
-const SYSTEM_INSTRUCTION_MESSAGE = {
+const SYSTEM_INSTRUCTION_MESSAGE: Message = {
   role: 'system',
   content: INSTRUCTION
-} as const satisfies ChatCompletionMessageParam;
-
+};
 /**
  * Get the content to send to ChatGPT API (it allows to includes images if supported)
  * @param config
@@ -38,18 +39,14 @@ async function getContent(
   config: Config,
   questionElement: HTMLElement,
   question: string
-): Promise<ChatCompletionUserMessageParam['content']> {
+): Promise<any> {
   const imagesElements = questionElement.querySelectorAll('img');
 
-  if (
-    !config.includeImages ||
-    !isGPTModelGreaterOrEqualTo4(config.model) ||
-    imagesElements.length === 0
-  ) {
+  if (!config.includeImages || imagesElements.length === 0) {
     return question;
   }
 
-  const contentWithImages: ChatCompletionUserMessageParam['content'] = [];
+  const contentWithImages: any[] = [];
 
   const base64Images = Array.from(imagesElements).map(imgEl => imageToBase64(imgEl));
   const base64ImagesResolved = await Promise.allSettled(base64Images);
@@ -103,13 +100,7 @@ function loadPastHistory(): History | null {
  * @returns
  */
 function areHistoryFromSameQuiz(a: History, b: History): boolean {
-  const KEYS_TO_COMPARE: (keyof History)[] = ['host', 'cmid', 'attempt'];
-
-  for (const key of KEYS_TO_COMPARE) {
-    if (a[key] !== b[key]) return false;
-  }
-
-  return true;
+  return a.host === b.host && a.cmid === b.cmid && a.attempt === b.attempt;
 }
 
 /**
@@ -124,11 +115,11 @@ async function getContentWithHistory(
   questionElement: HTMLElement,
   question: string
 ): Promise<{
-  messages: [typeof SYSTEM_INSTRUCTION_MESSAGE, ...ChatCompletionMessageParam[]];
+  messages: [Message, ...Message[]];
   saveResponse?: (response: string) => void;
 }> {
   const content = await getContent(config, questionElement, question);
-  const message: ChatCompletionMessageParam = { role: 'user', content };
+  const message: Message = { role: 'user', content };
 
   if (!config.history) return { messages: [SYSTEM_INSTRUCTION_MESSAGE, message] };
 
@@ -146,7 +137,6 @@ async function getContentWithHistory(
   return {
     messages: [SYSTEM_INSTRUCTION_MESSAGE, ...history.history, message],
     saveResponse(response: string) {
-      // Register the conversation
       if (config.history) {
         history.history.push(message);
         history.history.push({ role: 'assistant', content: response });
