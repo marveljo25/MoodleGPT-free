@@ -1,6 +1,6 @@
 import type Config from '../types/config';
 import Logs from 'background/utils/logs';
-import getChatGPTResponse from './get-response';
+import getResponse from './get-response';
 import createAndNormalizeQuestion from './create-question';
 import clipboardMode from './modes/clipboard';
 import questionToAnswerMode from './modes/question-to-answer';
@@ -25,7 +25,7 @@ async function reply(props: Props): Promise<void> {
   const question = createAndNormalizeQuestion(props.form);
   const inputList: NodeListOf<HTMLElement> = props.form.querySelectorAll(props.inputQuery);
 
-  const gptAnswer = await getChatGPTResponse(props.config, props.questionElement, question ).catch(
+  const gptAnswer = await getResponse(props.config, question, props.questionElement).catch(
     error => ({
       error
     })

@@ -3,7 +3,7 @@ import { handleModeChange } from './mode-handler';
 import './version';
 import './settings';
 import { showMessage } from './utils';
-import { getChatGPTResponse } from './api-test'; // Standalone
+import getResponse from '../background/core/get-response';
 
 const saveBtn = document.querySelector<HTMLButtonElement>('.save');
 const testBtn = document.querySelector<HTMLElement>('#check-model');
@@ -99,7 +99,7 @@ testBtn.addEventListener('click', async () => {
 
     try {
       console.log('Testing OpenRouter API with Qwen model...', cfg.apiKey);
-      const testResponse = await getChatGPTResponse(
+      const testResponse = await getResponse(
         { apiKey: cfg.apiKey, maxTokens: 50 },
         'Hello Qwen, test your response!'
       );

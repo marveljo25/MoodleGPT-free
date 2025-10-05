@@ -15,7 +15,7 @@ function normalizeText(text: string): string {
   return text.replace(/\s+/g, ' ').trim();
 }
 
-export async function getChatGPTResponse(
+export async function getResponse(
   config: Config,
   question: string,
   imageUrl?: string // optional: pass an image URL/base64
@@ -74,7 +74,7 @@ export async function getChatGPTResponse(
 
 // // Example usage:
 // const config = { apiKey: "     Your api key here    " };
-// getChatGPTResponse(
+// getResponse(
 //   config,
 //   "What do you see in this picture?",
 //   imageDataUrl
