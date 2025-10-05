@@ -4,11 +4,19 @@ title="Mortarboard icons created by itim2101 - Flaticon" ><img src="./extension/
 
 # MoodleGPT 1.1.5
 
-This extension allows you to hide CHAT-GPT in a Moodle quiz. You just need to click on the question you want to solve, and CHAT-GPT will automatically provide the answer. However, one needs to be careful because as we know, CHAT-GPT can make errors especially in calculations.
+This extension allows you to hide CHAT-GPT in a Moodle quiz. You just need to click on the question you want to solve, and CHAT-GPT will automatically provide the answer. However, one needs to be careful because as we know, CHAT-GPT can make errors, especially in calculations.
 
 ## Chrome Webstore
 
-Find the extension on the Chrome Webstore right [here](https://chrome.google.com/webstore/detail/moodlegpt/fgiepdkoifhpcgdhbiikpgdapjdoemko)
+Not published on the Chrome Webstore.
+
+---
+
+### Credits
+
+This project is originally created by **[Yoann Chb](https://github.com/yoannchb-pro)**.  
+This version is an **unofficial clone/modification** made for educational and research purposes only.  
+All credits for the concept, design, and initial implementation go to **Yoann Chb**.
 
 ## Summary
 
@@ -45,9 +53,9 @@ I hereby declare that I am not responsible for any misuse or illegal activities 
 
 ## Donate
 
-Will be a pleasure if you want to support this project :). I'm alone working on this project and I'm still a student.
+Will be a pleasure if you want to support this clone project :). I'm alone working on this project and I'm still a high schooler
 <br/>
-<a href="https://www.buymeacoffee.com/yoannchbpro" target="_blank" rel="noopener noreferrer"><img src="./assets/bmc-button.png" alt="Mortarboard icons created by itim2101 - Flaticon" width="150"></a>
+<a href="https://www.buymeacoffee.com/marvel1314k" target="_blank" rel="noopener noreferrer"><img src="./assets/bmc-button.png" alt="Mortarboard icons created by itim2101 - Flaticon" width="150"></a>
 
 ## Update
 
@@ -61,17 +69,16 @@ See the [changelog](./CHANGELOG.md) to see every updates !
 <img src="./assets/setup.png" alt="Popup" width="300">
 </p>
 
-Go to <b>"Manage my extensions"</b> on your browser, then click on <b>"Load unpacked extension"</b> and select the <b>"extension"</b> folder. Afterwards, click on the extension icon and enter the ApiKey obtained from [openai api](https://platform.openai.com/api-keys). Finally, select a [gpt model](https://platform.openai.com/docs/models) (ensure it work with completion api).
+Go to <b>"Manage my extensions"</b> on your browser, then click on <b>"Load unpacked extension"</b> and select the <b>"extension"</b> folder. Afterwards, click on the extension icon and enter the ApiKey obtained from [openrouter API](https://openrouter.ai/settings/keys).
 
 ## Settings
 
-- <b>API KEY\*</b>: Your openai [API KEY](https://platform.openai.com/api-keys)
-- <b>GPT MODEL\*</b>: The [gpt model](https://platform.openai.com/docs/models) (you can click on the play button to ensure the model work with the extension)
+- <b>API KEY\*</b>: Your OPEN-ROUTER api key
 
 ## Advanced Settings
 
 - <b>CODE</b>: A code you will need to type on your keyboard to inject/remove the extension code from the moodle page. It allow you to be more discret and control the injection so it's recommended.
-- <b>BASE URL</b>: The API endpoint if you need to use your own llm.
+- <b>BASE URL</b>: The API endpoint if you need to use your own llm, make sure using {baseURL}/api/v1/chat/completions
 - <b>MAX TOKENS</b>: The max tokens length you want the api to respond with.
 
 ## Mode
@@ -91,8 +98,7 @@ Go to <b>"Manage my extensions"</b> on your browser, then click on <b>"Load unpa
 <img src="./assets/settings.png" alt="Popup" width="300">
 </p>
 
-- <b>Api key\*</b>: the [openai api key](https://platform.openai.com/api-keys) from your account (Note you have to put credits by entering a credit card onto your account).
-- <b>GPT Model\*</b>: the [gpt model](https://platform.openai.com/docs/models) you want to use.
+- <b>Api key\*</b>: the [open-router api key](https://openrouter.ai/settings/keys) from your account.
 - <b>Code</b>: a code to be more discret for injecting/removing the extension from the page. Simply type your code you entered into the configuration on the keyboard when you are on your moodle quiz and the extension will be inject. If you want to remove the injection just simply type back the code on your keyboard.
 - <b>Cursor indication</b>: show a pointer cursor and a hourglass to know when the request is finished.
 - <b>Title indication</b>: show some informations into the title to know for example if the code have been injected.
@@ -107,7 +113,7 @@ Go to <b>"Manage my extensions"</b> on your browser, then click on <b>"Load unpa
   <br/> ![Mouseover2](./assets/mouseover2.gif)
 - <b>Infinite try</b>: click as much as you want on the question (don't forget to reset the question).
 - <b>Save history</b>: allows you to create a conversation with ChatGPT by saving the previous question with its answer. However, note that it can consume a significant number of tokens.
-- <b>Include images</b> (only work with gpt-4): allows you to include the images from the question to be send to the chatgpt api. The quality is reduced to 75% to use less tokens. However, note that it can consume a significant number of tokens.
+- <b>Include images</b> Works with ![QWEN](https://openrouter.ai/qwen/qwen2.5-vl-72b)
   <br/> ![Images](./assets/images.gif)
 
 ## Internal other features
@@ -176,4 +182,16 @@ To know if the answer has been copied to the clipboard, you can look at the titl
 
 ## Beta version with advanced features
 
-If you're interested in accessing advanced features ahead of their official release, please consider downloading the extension from the [dev branch](https://github.com/yoannchb-pro/MoodleGPT/tree/dev). However, please be aware that this branch is under development and may contain bugs. If you encounter any issues, don't hesitate to contact me or create an issue on GitHub. Your feedback is invaluable in helping us improve the extension.
+This version is a modified clone of the original [MoodleGPT](https://github.com/yoannchb-pro/MoodleGPT) project.  
+It does not include the official **dev branch** or beta updates from the original repository.  
+Any additional features or changes in this version are independently maintained.
+
+---
+
+## Credits
+
+- **Original project:** [MoodleGPT by Yoann Chb](https://github.com/yoannchb-pro/MoodleGPT)  
+- **Icons:** [Mortarboard icons created by itim2101 - Flaticon](https://www.flaticon.com/free-icons/mortarboard)  
+- **Inspiration:** Integrating ChatGPT with Moodle quizzes for educational purposes  
+- **Contributors:** Thanks to all users and developers who supported and tested this version.  
+- **Special thanks:** OpenAI and the open-source community for the technologies enabling this project.
