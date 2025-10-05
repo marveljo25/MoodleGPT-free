@@ -2,8 +2,9 @@
   "compilerOptions": {
     "strict": true,
     "baseUrl": "src",
-    "module": "esnext",
-    "target": "ES6",
+    "module": "es2020",
+    "target": "esnext",
+    "moduleResolution": "node",
     "esModuleInterop": true,
     "allowSyntheticDefaultImports": true,
     "noImplicitAny": true,

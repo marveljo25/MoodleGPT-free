@@ -1,16 +1,21 @@
 import { showMessage } from './utils';
 
-const apiKeySelector: HTMLInputElement = document.querySelector('#apiKey')!;
-const inputModel: HTMLInputElement = document.querySelector('#model')!;
-const baseURLSelector: HTMLInputElement = document.querySelector('#baseURL')!;
+const apiKeySelector = document.querySelector<HTMLInputElement>('#apiKey')!;
+const inputModel = document.querySelector<HTMLInputElement>('#model')!;
+const baseURLSelector = document.querySelector<HTMLInputElement>('#baseURL')!;
+
+if (!apiKeySelector || !inputModel || !baseURLSelector) {
+  throw new Error('Required inputs not found in DOM');
+}
 
 /**
  * Check if a Hugging Face model is valid by sending a dummy request
  */
+
 export async function checkModel() {
-  const model = inputModel.value?.trim();
-  const apiKey = apiKeySelector.value?.trim();
-  const baseURL = baseURLSelector.value?.trim() || 'https://api-inference.huggingface.co/models';
+  const model = inputModel.value.trim();
+  const apiKey = apiKeySelector.value.trim();
+  const baseURL = baseURLSelector.value.trim() || 'https://api-inference.huggingface.co/models';
 
   if (!model) {
     showMessage({ msg: 'Please enter a model name', isError: true });
@@ -25,16 +30,13 @@ export async function checkModel() {
   try {
     showMessage({ msg: 'Checking model...', isInfinite: true, isError: false });
 
-    // Send a tiny dummy request (zero content)
     const res = await fetch(`${baseURL}/${model}`, {
       method: 'POST',
       headers: {
         Authorization: `Bearer ${apiKey}`,
         'Content-Type': 'application/json'
       },
-      body: JSON.stringify({
-        inputs: "ping"
-      })
+      body: JSON.stringify({ inputs: 'ping' })
     });
 
     if (!res.ok) throw new Error(await res.text());
@@ -46,5 +48,18 @@ export async function checkModel() {
   }
 }
 
-const checkModelBtn: HTMLElement = document.querySelector('#check-model')!;
-checkModelBtn.addEventListener('click', checkModel);
+/**
+ * Example function to handle "Include Images" checkbox
+ */
+export function checkCanIncludeImages() {
+  const includeImagesCheckbox = document.querySelector<HTMLInputElement>('#includeImages');
+  if (includeImagesCheckbox) {
+    includeImagesCheckbox.disabled = false; // Add your logic here
+  }
+}
+
+// Attach click listener for button
+const checkModelBtn = document.querySelector<HTMLButtonElement>('#check-model');
+if (checkModelBtn) {
+  checkModelBtn.addEventListener('click', checkModel);
+}

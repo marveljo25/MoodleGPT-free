@@ -13,69 +13,73 @@ async function getChatGPTResponse(
 
   const contentHandler = await getContentWithHistory(config, questionElement, question);
 
-  // Hugging Face API URL (switch model here if needed)
-  const HF_API_URL =
-    'https://api-inference.huggingface.co/models/MiaoshouAI/Florence-2-large-PromptGen-v2.0';
+  // OpenRouter API endpoint for Qwen2.5-VL-72B-Instruct
+  const OR_API_URL = 'https://openrouter.ai/api/v1/chat/completions';
 
   let response: Response;
 
   // Case 1: text-only messages
   if (typeof contentHandler.messages[contentHandler.messages.length - 1].content === 'string') {
-    const prompt = contentHandler.messages
-      .map(m =>
-        typeof m.content === 'string'
-          ? `${m.role}: ${m.content}`
-          : JSON.stringify(m.content)
-      )
-      .join('\n');
+    const messages = contentHandler.messages.map(m => ({
+      role: m.role,
+      content: typeof m.content === 'string' ? m.content : JSON.stringify(m.content),
+    }));
 
-    response = await fetch(HF_API_URL, {
+    response = await fetch(OR_API_URL, {
+      method: 'POST',
+      headers: {
+        Authorization: `Bearer ${config.apiKey}`, // OpenRouter API key
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        model: 'qwen/qwen2.5-vl-72b-instruct:free',
+        messages,
+        max_tokens: config.maxTokens || 200,
+      }),
+      signal: config.timeout ? controller.signal : null,
+    });
+  } 
+  // Case 2: multimodal (images + text)
+  else {
+    const lastContent = contentHandler.messages[contentHandler.messages.length - 1]
+      .content as any[];
+
+    const messages = [
+      {
+        role: 'user',
+        content: lastContent.map(item =>
+          item.type === 'image_url'
+            ? { type: 'image_url', image_url: { url: item.image_url.url } }
+            : { type: 'text', text: item.text }
+        ),
+      },
+    ];
+
+    response = await fetch(OR_API_URL, {
       method: 'POST',
       headers: {
         Authorization: `Bearer ${config.apiKey}`,
-        'Content-Type': 'application/json'
+        'Content-Type': 'application/json',
       },
       body: JSON.stringify({
-        inputs: prompt,
-        parameters: { max_new_tokens: config.maxTokens || 200 }
+        model: 'qwen/qwen2.5-vl-72b-instruct:free',
+        messages,
+        max_tokens: config.maxTokens || 200,
       }),
-      signal: config.timeout ? controller.signal : null
-    });
-  }
-  // Case 2: multimodal (images + text)
-  else {
-    const formData = new FormData();
-
-    for (const item of contentHandler.messages[contentHandler.messages.length - 1].content as any[]) {
-      if (item.type === 'image_url') {
-        // image_url.url is already base64 (from getContent)
-        const base64 = item.image_url.url.split(',')[1];
-        const blob = Uint8Array.from(atob(base64), c => c.charCodeAt(0));
-        formData.append('image', new Blob([blob]));
-      } else if (item.type === 'text') {
-        formData.append('text', item.text);
-      }
-    }
-
-    response = await fetch(HF_API_URL, {
-      method: 'POST',
-      headers: { Authorization: `Bearer ${config.apiKey}` },
-      body: formData,
-      signal: config.timeout ? controller.signal : null
+      signal: config.timeout ? controller.signal : null,
     });
   }
 
   clearTimeout(timeoutControler);
 
   if (!response.ok) {
-    throw new Error(`HF API error ${response.status}: ${await response.text()}`);
+    throw new Error(`OpenRouter API error ${response.status}: ${await response.text()}`);
   }
 
   const result = await response.json();
   const text =
-    Array.isArray(result) && result[0]?.generated_text
-      ? result[0].generated_text
-      : JSON.stringify(result);
+    result.choices?.[0]?.message?.content ??
+    JSON.stringify(result);
 
   // Save history if enabled
   if (typeof contentHandler.saveResponse === 'function') {
@@ -85,7 +89,7 @@ async function getChatGPTResponse(
   return {
     question,
     response: text,
-    normalizedResponse: normalizeText(text)
+    normalizedResponse: normalizeText(text),
   };
 }
 
