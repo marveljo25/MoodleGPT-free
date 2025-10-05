@@ -1,6 +1,5 @@
 type Config = {
   apiKey: string;
-  model: string;
   code?: string;
   infinite?: boolean;
   typing?: boolean;

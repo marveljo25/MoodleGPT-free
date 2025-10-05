@@ -25,7 +25,7 @@ async function reply(props: Props): Promise<void> {
   const question = createAndNormalizeQuestion(props.form);
   const inputList: NodeListOf<HTMLElement> = props.form.querySelectorAll(props.inputQuery);
 
-  const gptAnswer = await getChatGPTResponse(props.config, props.questionElement, question).catch(
+  const gptAnswer = await getChatGPTResponse(props.config, props.questionElement, question ).catch(
     error => ({
       error
     })

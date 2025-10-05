@@ -1,14 +1,16 @@
-import { globalData, inputsCheckbox, modes } from './data';
+import { globalData, inputsCheckbox } from './data';
 import { handleModeChange } from './mode-handler';
 import './version';
 import './settings';
 import { showMessage } from './utils';
-import { checkModel, checkCanIncludeImages } from './gpt-version';
+import { getChatGPTResponse } from './api-test'; // Standalone
 
 const saveBtn = document.querySelector<HTMLButtonElement>('.save');
+const testBtn = document.querySelector<HTMLElement>('#check-model');
 if (!saveBtn) throw new Error('Save button not found');
+if (!testBtn) throw new Error('Test button not found');
 
-const inputsText = ['apiKey', 'code', 'model', 'baseURL', 'maxTokens'];
+const inputsText = ['apiKey', 'code', 'baseURL', 'maxTokens'];
 
 // Save configuration
 saveBtn.addEventListener('click', () => {
@@ -18,7 +20,7 @@ saveBtn.addEventListener('click', () => {
     return input.value.trim();
   });
 
-  const [apiKey, code, model, baseURL, maxTokens] = values;
+  const [apiKey, code, baseURL, maxTokens] = values;
 
   const checkboxValues = inputsCheckbox.map(selector => {
     const element = document.querySelector<HTMLInputElement>('#' + selector);
@@ -28,7 +30,7 @@ saveBtn.addEventListener('click', () => {
   const [logs, title, cursor, typing, mouseover, infinite, timeout, history, includeImages] =
     checkboxValues;
 
-  if (!apiKey || !model) {
+  if (!apiKey) {
     showMessage({ msg: 'Please complete all the form', isError: true });
     return;
   }
@@ -42,7 +44,6 @@ saveBtn.addEventListener('click', () => {
     moodleGPT: {
       apiKey,
       code,
-      model,
       baseURL,
       maxTokens: maxTokens ? parseInt(maxTokens) : undefined,
       logs,
@@ -54,7 +55,8 @@ saveBtn.addEventListener('click', () => {
       timeout,
       history,
       includeImages,
-      mode: globalData.actualMode
+      mode: globalData.actualMode,
+      model: 'qwen/qwen2.5-vl-72b-instruct:free' // fixed Qwen model
     }
   });
 
@@ -69,10 +71,6 @@ chrome.storage.sync.get(['moodleGPT']).then(storage => {
   // Load mode
   if (config.mode) {
     globalData.actualMode = config.mode;
-    modes.forEach(mode => {
-      if (mode.value === config.mode) mode.classList.remove('not-selected');
-      else mode.classList.add('not-selected');
-    });
   }
 
   // Load text inputs
@@ -88,8 +86,26 @@ chrome.storage.sync.get(['moodleGPT']).then(storage => {
   });
 
   handleModeChange();
-  checkCanIncludeImages();
+});
 
-  // Automatically check model on load
-  checkModel();
+// Test API key / make a test request
+testBtn.addEventListener('click', async () => {
+  chrome.storage.sync.get(['moodleGPT']).then(async storage => {
+    const cfg = storage.moodleGPT;
+    if (!cfg || !cfg.apiKey) {
+      showMessage({ msg: 'API key not set', isError: true });
+      return;
+    }
+
+    try {
+      console.log('Testing OpenRouter API with Qwen model...', cfg.apiKey);
+      const testResponse = await getChatGPTResponse(
+        { apiKey: cfg.apiKey, maxTokens: 50 },
+        'Hello Qwen, test your response!'
+      );
+      showMessage({ msg: 'Test successful: ' + testResponse.response });
+    } catch (err: any) {
+      showMessage({ msg: 'Test failed: ' + err.message, isError: true });
+    }
+  });
 });

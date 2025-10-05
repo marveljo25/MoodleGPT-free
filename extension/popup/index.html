@@ -1,167 +1,154 @@
 <!doctype html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>MoodleGPT</title>
-    <link rel="stylesheet" href="style.css" />
 
-    <script src="./popup.js" defer></script>
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>MoodleGPT</title>
+  <link rel="stylesheet" href="style.css" />
 
-    <link rel="icon" type="image/png" href="../icon.png" />
-    <link
-      rel="stylesheet"
-      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
-      integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw=="
-      crossorigin="anonymous"
-      referrerpolicy="no-referrer"
-    />
-  </head>
+  <script src="./popup.js" defer></script>
 
-  <body>
-    <main>
-      <div class="line center" style="margin-bottom: 0.5rem">
-        <a
-          target="_blank"
-          rel="noopener noreferrer"
-          href="https://www.flaticon.com/free-icons/mortarboard"
-          title="Mortarboard icons created by itim2101 - Flaticon"
-        >
-          <img src="../icon.png" alt="icon" />
-        </a>
-        <div class="col center title">
-          <h1>MoodleGPT</h1>
-          <p id="version"></p>
-        </div>
-      </div>
+  <link rel="icon" type="image/png" href="../icon.png" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw=="
+    crossorigin="anonymous" referrerpolicy="no-referrer" />
+</head>
 
-      <!-- SETTINGS -->
-      <div class="settings" id="settings">
-        <div class="line center">
-          <label for="apiKey" class="textLabel">Api Key<span class="required">*</span>:</label>
-          <input id="apiKey" type="text" />
-        </div>
-        <div class="line center">
-          <label for="model" class="textLabel">GPT Model<span class="required">*</span>:</label>
-          <input type="text" id="model" list="models" />
-          <datalist id="models"></datalist>
-          <i id="check-model" title="Test" style="cursor: pointer" class="fa-solid fa-play"></i>
-        </div>
+<body>
+  <main>
+    <div class="line center" style="margin-bottom: 0.5rem">
+      <a target="_blank" rel="noopener noreferrer" href="https://www.flaticon.com/free-icons/mortarboard"
+        title="Mortarboard icons created by itim2101 - Flaticon">
+        <img src="../icon.png" alt="icon" />
+      </a>
+      <div class="col center title">
+        <h1>MoodleGPT</h1>
+        <p id="version"></p>
       </div>
+    </div>
 
-      <!-- ADVANCED SETTINGS -->
-      <div class="settings" id="advanced-settings" style="display: none">
-        <div class="line center">
-          <label for="code" class="textLabel">Code:</label>
-          <input id="code" type="text" />
-        </div>
-        <div class="line center">
-          <label for="baseURL" class="textLabel">Base URL:</label>
-          <input id="baseURL" type="text" />
-        </div>
-        <div class="line center">
-          <label for="maxTokens" class="textLabel">Max Tokens:</label>
-          <input id="maxTokens" type="number" />
-        </div>
-      </div>
-
-      <!-- SWITCH SETTINGS MODE -->
-      <div class="line center mt">
-        <a id="switch-settings" href="#">Advanced settings</a>
-      </div>
-
-      <div class="line center-y mt">
-        <i class="fa-solid fa-robot"></i>
-        <p>Mode:</p>
-      </div>
-      <div class="line">
-        <ul id="mode" class="line center">
-          <li><button value="autocomplete">autocomplete</button></li>
-          <li>
-            <button value="clipboard" class="not-selected">clipboard</button>
-          </li>
-          <li>
-            <button value="question-to-answer" class="not-selected">question to answer</button>
-          </li>
-        </ul>
-      </div>
-      <div class="line mt center-y">
-        <i class="fa-solid fa-gear"></i>
-        <p>Options:</p>
-      </div>
-      <div class="line center" style="gap: 2rem">
-        <div class="col">
-          <div class="line">
-            <input id="logs" type="checkbox" />
-            <label for="logs">Console logs</label>
-          </div>
-          <div class="line">
-            <input id="title" type="checkbox" checked />
-            <label for="title">Title indication</label>
-          </div>
-          <div class="line">
-            <input id="cursor" type="checkbox" checked />
-            <label for="cursor">Cursor indication</label>
-          </div>
-          <div class="line">
-            <input id="timeout" type="checkbox" checked />
-            <label for="timeout">Request timeout</label>
-          </div>
-        </div>
-        <div class="col">
-          <div class="line">
-            <input id="typing" type="checkbox" />
-            <label for="typing">Typing effect</label>
-          </div>
-          <div class="line">
-            <input id="mouseover" type="checkbox" />
-            <label for="mouseover">Mouseover effect</label>
-          </div>
-          <div class="line">
-            <input id="infinite" type="checkbox" />
-            <label for="infinite">Infinite try</label>
-          </div>
-          <div class="line">
-            <input id="history" type="checkbox" />
-            <label for="history">Save history</label>
-          </div>
-          <!-- This option is only showed if the current version of the model support it -->
-          <div class="line" id="includeImages-line" style="display: none">
-            <input id="includeImages" type="checkbox" />
-            <label for="includeImages">Include images</label>
-          </div>
-        </div>
-      </div>
-      <p id="message">{Message}</p>
+    <!-- SETTINGS -->
+    <div class="settings" id="settings">
       <div class="line center">
-        <button class="save">Save</button>
+        <label for="apiKey" class="textLabel">Api Key<span class="required">*</span>:</label>
+        <input id="apiKey" type="text" />
+        <i id="check-model" title="Test" style="cursor: pointer" class="fa-solid fa-play"></i>
       </div>
       <div class="line center">
-        <a
-          class="donate"
-          href="https://www.buymeacoffee.com/yoannchbpro"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Donate
-        </a>
-        <a
-          href="https://github.com/yoannchb-pro/MoodleGPT"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          See the documentation
-        </a>
-
-        <a
-          href="https://github.com/yoannchb-pro/MoodleGPT/issues"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Need Help
-        </a>
+        <label class="textLabel">GPT Model:</label>
+        <input type="text" value="qwen/qwen2.5-vl-72b-instruct:free" disabled
+          style="color: #777777; cursor: not-allowed;" />
       </div>
-    </main>
-  </body>
+    </div>
+
+    <!-- ADVANCED SETTINGS -->
+    <div class="settings" id="advanced-settings" style="display: none">
+      <div class="line center">
+        <label for="code" class="textLabel">Code:</label>
+        <input id="code" type="text" />
+      </div>
+      <div class="line center">
+        <label for="baseURL" class="textLabel">Base URL:</label>
+        <input id="baseURL" type="text" />
+      </div>
+      <div class="line center">
+        <label for="maxTokens" class="textLabel">Max Tokens:</label>
+        <input id="maxTokens" type="number" />
+      </div>
+    </div>
+
+    <!-- SWITCH SETTINGS MODE -->
+    <div class="line center mt">
+      <a id="switch-settings" href="#">Advanced settings</a>
+    </div>
+
+    <div class="line center-y mt">
+      <i class="fa-solid fa-robot"></i>
+      <p>Mode:</p>
+    </div>
+    <div class="line">
+      <ul id="mode" class="line center">
+        <li><button value="autocomplete">autocomplete</button></li>
+        <li>
+          <button value="clipboard" class="not-selected">clipboard</button>
+        </li>
+        <li>
+          <button value="question-to-answer" class="not-selected">question to answer</button>
+        </li>
+      </ul>
+    </div>
+    <div class="line mt center-y">
+      <i class="fa-solid fa-gear"></i>
+      <p>Options:</p>
+    </div>
+    <div class="line center" style="gap: 2rem">
+      <div class="col">
+        <div class="line">
+          <input id="logs" type="checkbox" />
+          <label for="logs">Console logs</label>
+        </div>
+        <div class="line">
+          <input id="title" type="checkbox" checked />
+          <label for="title">Title indication</label>
+        </div>
+        <div class="line">
+          <input id="cursor" type="checkbox" checked />
+          <label for="cursor">Cursor indication</label>
+        </div>
+        <div class="line">
+          <input id="timeout" type="checkbox" checked />
+          <label for="timeout">Request timeout</label>
+        </div>
+      </div>
+      <div class="col">
+        <div class="line">
+          <input id="typing" type="checkbox" />
+          <label for="typing">Typing effect</label>
+        </div>
+        <div class="line">
+          <input id="mouseover" type="checkbox" />
+          <label for="mouseover">Mouseover effect</label>
+        </div>
+        <div class="line">
+          <input id="infinite" type="checkbox" />
+          <label for="infinite">Infinite try</label>
+        </div>
+        <div class="line">
+          <input id="history" type="checkbox" />
+          <label for="history">Save history</label>
+        </div>
+        <!-- This option is only showed if the current version of the model support it -->
+        <div class="line">
+          <input id="includeImages" type="checkbox" />
+          <label for="includeImages">Include images</label>
+        </div>
+      </div>
+    </div>
+    <p id="message">{Message}</p>
+    <div class="line center">
+      <button class="save">Save</button>
+    </div>
+    <div class="line center">
+      <a class="donate" href="https://www.buymeacoffee.com/yoannchbpro" target="_blank" rel="noopener noreferrer">
+        Donate
+      </a>
+
+      <a href="https://github.com/yoannchb-pro/MoodleGPT" target="_blank" rel="noopener noreferrer">
+        See the documentation
+      </a>
+
+      <a href="https://github.com/yoannchb-pro/MoodleGPT/issues" target="_blank" rel="noopener noreferrer">
+        Need Help
+      </a>
+
+      <!-- New Credits link -->
+      <a href="https://github.com/yoannchb-pro/MoodleGPT#credits" target="_blank" rel="noopener noreferrer">
+        Credits
+      </a>
+    </div>
+  </main>
+</body>
+
 </html>

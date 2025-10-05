@@ -26,7 +26,7 @@ export function setVersion(version: string, isCurrent = true) {
   }
 
   const link = document.createElement('a');
-  link.href = 'https://github.com/yoannchb-pro/MoodleGPT';
+  link.href = 'https://github.com/marveljo25/MoodleGPT-free';
   link.rel = 'noopener noreferrer';
   link.target = '_blank';
   link.textContent = 'v' + version;
