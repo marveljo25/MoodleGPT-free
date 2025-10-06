@@ -2,21 +2,38 @@
 href="https://www.flaticon.com/free-icons/mortarboard" target="_blank" rel="noopener noreferrer"
 title="Mortarboard icons created by itim2101 - Flaticon" ><img src="./extension/icon.png" alt="Mortarboard icons created by itim2101 - Flaticon" width="150" style="display:block; margin:auto;"></a></p>
 
-# MoodleGPT 1.1.5 clone
+# MoodleGPT 1.1.5 (Unofficial Clone)
 
-This extension allows you to hide CHAT-GPT in a Moodle quiz. You just need to click on the question you want to solve, and CHAT-GPT will automatically provide the answer. However, one needs to be careful because as we know, CHAT-GPT can make errors, especially in calculations.
-
-## Chrome Webstore
-
-Not published on the Chrome Webstore.
+This browser extension allows you to **integrate AI assistance directly into Moodle quizzes**.  
+Simply click on a question, and the AI model will automatically generate an answer.  
+Please note that, like any AI system, responses may not always be accurate — especially for calculations or subjective questions.
 
 ---
 
-### Credits
+## 🧩 Chrome Web Store
 
-This project is originally created by **[Yoann Chb](https://github.com/yoannchb-pro)**.  
-This version is an **unofficial clone/modification** made for educational and research purposes only.  
-All credits for the concept, design, and initial implementation go to **Yoann Chb**.
+This version is **not published** on the Chrome Web Store.
+
+---
+
+## 🙌 Credits
+
+The original MoodleGPT project was created by **[Yoann Chb](https://github.com/yoannchb-pro)**.  
+
+This version is an **unofficial modification** designed to **remove the dependency on the paid OpenAI API**, instead using **Qwen 2.5VL-72B-Instruct** — a **free, open-access model** that supports both **text and image inputs** at no cost.
+
+All credit for the original concept, design, and implementation goes to **Yoann Chb**.
+
+---
+
+## 🔄 Differences from the Original
+
+- 🧠 Uses **Qwen 2.5VL-72B-Instruct** instead of OpenAI (no API key required)  
+- 💸 **Completely free** — no paid API usage  
+- 🖼️ Supports **image uploads** for visual question analysis  
+- ⚡ Maintains original MoodleGPT interface and features  
+
+---
 
 ## Summary
 
@@ -55,7 +72,7 @@ I hereby declare that I am not responsible for any misuse or illegal activities 
 
 Will be a pleasure if you want to support this clone project :). I'm alone working on this project and I'm still a high schooler
 <br/>
-<a href="https://www.buymeacoffee.com/marvel1314k" target="_blank" rel="noopener noreferrer"><img src="./assets/bmc-button.png" alt="Mortarboard icons created by itim2101 - Flaticon" width="150"></a>
+<a href="https://buymeacoffee.com/marveljo" target="_blank" rel="noopener noreferrer"><img src="./assets/bmc-button.png" alt="Mortarboard icons created by itim2101 - Flaticon" width="150"></a>
 
 ## Update
 
@@ -192,6 +209,6 @@ Any additional features or changes in this version are independently maintained.
 
 - **Original project:** [MoodleGPT by Yoann Chb](https://github.com/yoannchb-pro/MoodleGPT)  
 - **Icons:** [Mortarboard icons created by itim2101 - Flaticon](https://www.flaticon.com/free-icons/mortarboard)  
-- **Inspiration:** Integrating ChatGPT with Moodle quizzes for educational purposes  
-- **Contributors:** Thanks to all users and developers who supported and tested this version.  
+- **Inspiration:** Integrating AI with Moodle quizzes for educational purposes/~~and cheating~~
+- **Contributors:** Me
 - **Special thanks:** OpenAI and the open-source community for the technologies enabling this project.
