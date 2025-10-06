@@ -28,10 +28,10 @@ All credit for the original concept, design, and implementation goes to **Yoann 
 
 ## 🔄 Differences from the Original
 
-- 🧠 Uses **Qwen 2.5VL-72B-Instruct** instead of OpenAI (no API key required)  
-- 💸 **Completely free** — no paid API usage  
-- 🖼️ Supports **image uploads** for visual question analysis  
-- ⚡ Maintains original MoodleGPT interface and features  
+- Uses **Qwen 2.5VL-72B-Instruct** instead of OpenAI (no API key required)  
+- **Completely free** — no paid API usage  
+- Supports **image uploads** for visual question analysis  
+- Maintains original MoodleGPT interface and features  
 
 ---
 
