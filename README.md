@@ -28,7 +28,7 @@ All credit for the original concept, design, and implementation goes to **Yoann 
 
 ## 🔄 Differences from the Original
 
-- Uses **google/gemini-2.0-flash-exp:free** instead of OpenAI (no API key required)  
+- Uses **google/gemini-2.0-flash-exp:free** instead of OpenAI (use openrouter API key)  
 - **Completely free** — no paid API usage  
 - Supports **image uploads** for visual question analysis  
 - Maintains original MoodleGPT interface and features  
