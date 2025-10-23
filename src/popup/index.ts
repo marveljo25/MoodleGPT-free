@@ -56,7 +56,7 @@ saveBtn.addEventListener('click', () => {
       history,
       includeImages,
       mode: globalData.actualMode,
-      model: 'qwen/qwen2.5-vl-72b-instruct:free' // fixed Qwen model
+      model: 'google/gemini-2.0-flash-exp:free' // fixed
     }
   });
 
@@ -98,10 +98,10 @@ testBtn.addEventListener('click', async () => {
     }
 
     try {
-      console.log('Testing OpenRouter API with Qwen model...', cfg.apiKey);
+      console.log('Testing OpenRouter API ...', cfg.apiKey);
       const testResponse = await getResponse(
         { apiKey: cfg.apiKey, maxTokens: 50 },
-        'Hello Qwen, test your response!'
+        'Hello, test your response!'
       );
       showMessage({ msg: 'Test successful: ' + testResponse.response });
     } catch (err: any) {

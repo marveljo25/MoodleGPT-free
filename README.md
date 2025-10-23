@@ -20,7 +20,7 @@ This version is **not published** on the Chrome Web Store.
 
 The original MoodleGPT project was created by **[Yoann Chb](https://github.com/yoannchb-pro)**.  
 
-This version is an **unofficial modification** designed to **remove the dependency on the paid OpenAI API**, instead using **Qwen 2.5VL-72B-Instruct** — a **free, open-access model** that supports both **text and image inputs** at no cost.
+This version is an **unofficial modification** designed to **remove the dependency on the paid OpenAI API**, instead using **google/gemini-2.0-flash-exp:free** — a **free, open-access model** that supports both **text and image inputs** at no cost.
 
 All credit for the original concept, design, and implementation goes to **Yoann Chb**.
 
@@ -28,7 +28,7 @@ All credit for the original concept, design, and implementation goes to **Yoann 
 
 ## 🔄 Differences from the Original
 
-- Uses **Qwen 2.5VL-72B-Instruct** instead of OpenAI (no API key required)  
+- Uses **google/gemini-2.0-flash-exp:free** instead of OpenAI (no API key required)  
 - **Completely free** — no paid API usage  
 - Supports **image uploads** for visual question analysis  
 - Maintains original MoodleGPT interface and features  
@@ -130,7 +130,7 @@ Go to <b>"Manage my extensions"</b> on your browser, then click on <b>"Load unpa
   <br/> ![Mouseover2](./assets/mouseover2.gif)
 - <b>Infinite try</b>: click as much as you want on the question (don't forget to reset the question).
 - <b>Save history</b>: allows you to create a conversation with ChatGPT by saving the previous question with its answer. However, note that it can consume a significant number of tokens.
-- <b>Include images</b> Works with ![QWEN](https://openrouter.ai/qwen/qwen2.5-vl-72b)
+- <b>Include images</b> Works with ![GEMINI](https://openrouter.ai/google/gemini-2.0-flash-exp:free/api)
   <br/> ![Images](./assets/images.gif)
 
 ## Internal other features

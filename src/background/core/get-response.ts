@@ -49,7 +49,7 @@ async function getResponse(
       'Content-Type': 'application/json'
     },
     body: JSON.stringify({
-      model: 'qwen/qwen2.5-vl-72b-instruct:free',
+      model: 'google/gemini-2.0-flash-exp:free',
       messages: contentHandler.messages,
       max_tokens: config.maxTokens || 200
     }),

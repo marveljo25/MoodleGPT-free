@@ -1,4 +1,4 @@
-// Standalone function to test OpenRouter API with Qwen model and image input
+// Standalone function to test OpenRouter API with Gemini model and image input
 type Config = {
   apiKey: string;
   maxTokens?: number;
@@ -41,7 +41,7 @@ export async function getResponse(
       'Content-Type': 'application/json'
     },
     body: JSON.stringify({
-      model: 'qwen/qwen2.5-vl-72b-instruct:free',
+      model: 'google/gemini-2.0-flash-exp:free',
       messages: [
         {
           role: 'user',
