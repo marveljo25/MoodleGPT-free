@@ -20,7 +20,7 @@ This version is **not published** on the Chrome Web Store.
 
 The original MoodleGPT project was created by **[Yoann Chb](https://github.com/yoannchb-pro)**.  
 
-This version is an **unofficial modification** designed to **remove the dependency on the paid OpenAI API**, instead using your free/paid model choice — a **Some** supports both **text and image inputs** at no cost.
+This version is an **unofficial modification** designed to **remove the dependency on the paid OpenAI API**, instead using your free/paid model choice — **Some** supports both **text and image inputs** at no cost.
 
 All credit for the original concept, design, and implementation goes to **Yoann Chb**.
 
