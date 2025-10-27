@@ -49,7 +49,7 @@ async function getResponse(
       'Content-Type': 'application/json'
     },
     body: JSON.stringify({
-      model: 'google/gemini-2.0-flash-exp:free',
+      model: config.model,
       messages: contentHandler.messages,
       max_tokens: config.maxTokens || 200
     }),

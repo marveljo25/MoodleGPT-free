@@ -14,5 +14,5 @@
     "typeRoots": ["node_modules/@types"],
     "strictBindCallApply": true
   },
-  "include": ["src/**/*", "api-test.ts"]
+  "include": ["src/**/*"]
 }

@@ -13,6 +13,7 @@ type Config = {
   mode?: 'autocomplete' | 'question-to-answer' | 'clipboard';
   baseURL?: string;
   maxTokens?: number;
+  model?: string;
 };
 
 export default Config;

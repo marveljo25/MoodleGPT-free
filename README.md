@@ -10,27 +10,27 @@ Please note that, like any AI system, responses may not always be accurate — e
 
 ---
 
-## 🧩 Chrome Web Store
+## Chrome Web Store
 
 This version is **not published** on the Chrome Web Store.
 
 ---
 
-## 🙌 Credits
+## Credits
 
 The original MoodleGPT project was created by **[Yoann Chb](https://github.com/yoannchb-pro)**.  
 
-This version is an **unofficial modification** designed to **remove the dependency on the paid OpenAI API**, instead using **google/gemini-2.0-flash-exp:free** — a **free, open-access model** that supports both **text and image inputs** at no cost.
+This version is an **unofficial modification** designed to **remove the dependency on the paid OpenAI API**, instead using your free/paid model choice — a **Some** supports both **text and image inputs** at no cost.
 
 All credit for the original concept, design, and implementation goes to **Yoann Chb**.
 
 ---
 
-## 🔄 Differences from the Original
+## Differences from the Original
 
-- Uses **google/gemini-2.0-flash-exp:free** instead of OpenAI (use openrouter API key)  
-- **Completely free** — no paid API usage  
-- Supports **image uploads** for visual question analysis  
+- It uses **openrouter API key** instead of OpenAI  
+- **Completely free** — for free models  
+- Supports **image uploads** for visual models  
 - Maintains original MoodleGPT interface and features  
 
 ---
@@ -91,6 +91,12 @@ Go to <b>"Manage my extensions"</b> on your browser, then click on <b>"Load unpa
 ## Settings
 
 - <b>API KEY\*</b>: Your OPEN-ROUTER api key
+- <b>**MODEL\*</b>: Your model name in the format `<provider>/<model>[:variant]`  
+  - Example: `qwen/qwen2.5-vl-32b-instruct:free`  
+  - Structure:  
+    - `<provider>` → organization or developer (e.g., `qwen`, `google`, `meta-llama`)  
+    - `<model>` → model identifier (e.g., `qwen2.5-vl-32b-instruct`)  
+    - `[:variant]` → optional tag such as `:free` for free-tier models  
 
 ## Advanced Settings
 
@@ -130,7 +136,7 @@ Go to <b>"Manage my extensions"</b> on your browser, then click on <b>"Load unpa
   <br/> ![Mouseover2](./assets/mouseover2.gif)
 - <b>Infinite try</b>: click as much as you want on the question (don't forget to reset the question).
 - <b>Save history</b>: allows you to create a conversation with ChatGPT by saving the previous question with its answer. However, note that it can consume a significant number of tokens.
-- <b>Include images</b> Works with ![GEMINI](https://openrouter.ai/google/gemini-2.0-flash-exp:free/api)
+- <b>Include images</b> Works if using vision models
   <br/> ![Images](./assets/images.gif)
 
 ## Internal other features
