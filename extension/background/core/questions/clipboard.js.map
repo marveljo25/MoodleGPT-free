@@ -1,0 +1,1 @@
+{"version":3,"file":"clipboard.js","sourceRoot":"","sources":["../../../../src/background/core/questions/clipboard.ts"],"names":[],"mappings":"AAEA,OAAO,gBAAgB,MAAM,oCAAoC,CAAC;AAElE;;;;GAIG;AACH,SAAS,eAAe,CAAC,MAAc,EAAE,SAAoB;IAC3D,IAAI,MAAM,CAAC,KAAK;QAAE,gBAAgB,CAAC,qBAAqB,CAAC,CAAC;IAC1D,SAAS,CAAC,SAAS,CAAC,SAAS,CAAC,SAAS,CAAC,QAAQ,CAAC,CAAC;AACpD,CAAC;AAED,eAAe,eAAe,CAAC"}

@@ -27,9 +27,9 @@ async function getResponse(
           role: 'user',
           content: imageUrl
             ? [
-              { type: 'text', text: question },
-              { type: 'image_url', image_url: { url: imageUrl } }
-            ]
+                { type: 'text', text: question },
+                { type: 'image_url', image_url: { url: imageUrl } }
+              ]
             : question
         }
       ]
@@ -42,6 +42,16 @@ async function getResponse(
       : 'https://openrouter.ai';
   const OR_API_URL = `${baseURL}/api/v1/chat/completions`;
 
+  // 🧠 Enforce reasoning format (only addition)
+  const reasoningInstruction = {
+    role: 'system',
+    content: `You are a helpful reasoning assistant. 
+When answering, always include:
+EXPLANATION:
+(Show clear, numbered reasoning steps.)
+FINAL ANSWER: (Give the concise final result.)`
+  };
+
   const response = await fetch(OR_API_URL, {
     method: 'POST',
     headers: {
@@ -50,7 +60,7 @@ async function getResponse(
     },
     body: JSON.stringify({
       model: config.model,
-      messages: contentHandler.messages,
+      messages: [reasoningInstruction, ...contentHandler.messages],
       max_tokens: config.maxTokens || 200
     }),
     signal: config.timeout ? controller.signal : null
@@ -65,7 +75,6 @@ async function getResponse(
   const result = await response.json();
   const text = result.choices?.[0]?.message?.content ?? JSON.stringify(result);
 
-  // Only call saveResponse if it exists
   if ('saveResponse' in contentHandler && typeof contentHandler.saveResponse === 'function') {
     contentHandler.saveResponse(text);
   }

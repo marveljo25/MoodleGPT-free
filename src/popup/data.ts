@@ -1,13 +1,14 @@
 export const globalData = { actualMode: 'autocomplete' };
 
+// Grouped and ordered checkboxes for clearer UI: general options first, then behavior/history
 export const inputsCheckbox = [
   'logs',
   'title',
   'cursor',
+  'timeout',
   'typing',
   'mouseover',
   'infinite',
-  'timeout',
   'history',
   'includeImages'
 ];

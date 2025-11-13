@@ -27,18 +27,19 @@ saveBtn.addEventListener('click', async () => {
   const includeImagesCheckbox = document.querySelector<HTMLInputElement>('#includeImages');
   if (!includeImagesCheckbox) throw new Error('Include Images checkbox not found');
 
-  if (!apiKey || !model) {
-    showMessage({ msg: 'Please complete all the form', isError: true });
+  // Require apiKey, model and code (code is now a required top-level field)
+  if (!apiKey || !model || !code) {
+    showMessage({ msg: 'Please complete required fields: Api Key, GPT Model and Code', isError: true });
     return;
   }
 
   // ✅ Check model support before saving
-let supportsImage = false;
+  let supportsImage = false;
 
-try {
-  const res = await fetch('https://openrouter.ai/api/v1/models', {
-    headers: { Authorization: `Bearer ${apiKey}` }
-  });
+  try {
+    const res = await fetch('https://openrouter.ai/api/v1/models', {
+      headers: { Authorization: `Bearer ${apiKey}` }
+    });
 
     if (res.ok) {
       const data = await res.json();
@@ -47,16 +48,16 @@ try {
         return id.toLowerCase().replace(/:free$/, '');
       }
 
-      const modelInfo = data.data?.find((m: any) =>
-        normalizeModelId(m.id).includes(normalizeModelId(model)) ||
-        normalizeModelId(m.hugging_face_id).includes(normalizeModelId(model))
+      const modelInfo = data.data?.find(
+        (m: any) =>
+          normalizeModelId(m.id).includes(normalizeModelId(model)) ||
+          normalizeModelId(m.hugging_face_id).includes(normalizeModelId(model))
       );
 
       // Check the right place for input_modalities
       supportsImage = modelInfo?.architecture?.input_modalities?.includes('image') ?? false;
       console.log('Model info:', modelInfo);
       console.log('Supports image:', supportsImage);
-
     }
   } catch (err) {
     console.warn('Failed to check model capabilities:', err);
@@ -108,7 +109,6 @@ try {
   showMessage({ msg: 'Configuration saved' });
 });
 
-
 // Load configuration and initialize UI
 chrome.storage.sync.get(['moodleGPT']).then(storage => {
   const config = storage.moodleGPT;
@@ -144,12 +144,15 @@ testBtn.addEventListener('click', async () => {
     } else if (!cfg.model) {
       showMessage({ msg: 'Model not set', isError: true });
       return;
+    } else if (!cfg.code) {
+      showMessage({ msg: 'Code not set (required)', isError: true });
+      return;
     }
 
     try {
       const testResponse = await getResponse(
         { apiKey: cfg.apiKey, model: cfg.model, maxTokens: 50 },
-        'Hello, what is your model?',
+        'Hello, what is your model?'
       );
       showMessage({ msg: 'Test successful: ' + testResponse.response });
     } catch (err: any) {

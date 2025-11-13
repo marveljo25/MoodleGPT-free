@@ -18,7 +18,7 @@ This version is **not published** on the Chrome Web Store.
 
 ## Credits
 
-The original MoodleGPT project was created by **[Yoann Chb](https://github.com/yoannchb-pro)**.  
+The original MoodleGPT project was created by **[Yoann Chb](https://github.com/yoannchb-pro)**.
 
 This version is an **unofficial modification** designed to **remove the dependency on the paid OpenAI API**, instead using your free/paid model choice — a **Some** supports both **text and image inputs** at no cost.
 
@@ -28,10 +28,10 @@ All credit for the original concept, design, and implementation goes to **Yoann 
 
 ## Differences from the Original
 
-- It uses **openrouter API key** instead of OpenAI  
-- **Completely free** — for free models  
-- Supports **image uploads** for visual models  
-- Maintains original MoodleGPT interface and features  
+- It uses **openrouter API key** instead of OpenAI
+- **Completely free** — for free models
+- Supports **image uploads** for visual models
+- Maintains original MoodleGPT interface and features
 
 ---
 
@@ -91,12 +91,12 @@ Go to <b>"Manage my extensions"</b> on your browser, then click on <b>"Load unpa
 ## Settings
 
 - <b>API KEY\*</b>: Your OPEN-ROUTER api key
-- <b>**MODEL\*</b>: Your model name in the format `<provider>/<model>[:variant]`  
-  - Example: `qwen/qwen2.5-vl-32b-instruct:free`  
-  - Structure:  
-    - `<provider>` → organization or developer (e.g., `qwen`, `google`, `meta-llama`)  
-    - `<model>` → model identifier (e.g., `qwen2.5-vl-32b-instruct`)  
-    - `[:variant]` → optional tag such as `:free` for free-tier models  
+- <b>\*\*MODEL\*</b>: Your model name in the format `<provider>/<model>[:variant]`
+  - Example: `qwen/qwen2.5-vl-32b-instruct:free`
+  - Structure:
+    - `<provider>` → organization or developer (e.g., `qwen`, `google`, `meta-llama`)
+    - `<model>` → model identifier (e.g., `qwen2.5-vl-32b-instruct`)
+    - `[:variant]` → optional tag such as `:free` for free-tier models
 
 ## Advanced Settings
 
@@ -213,8 +213,8 @@ Any additional features or changes in this version are independently maintained.
 
 ## Credits
 
-- **Original project:** [MoodleGPT by Yoann Chb](https://github.com/yoannchb-pro/MoodleGPT)  
-- **Icons:** [Mortarboard icons created by itim2101 - Flaticon](https://www.flaticon.com/free-icons/mortarboard)  
+- **Original project:** [MoodleGPT by Yoann Chb](https://github.com/yoannchb-pro/MoodleGPT)
+- **Icons:** [Mortarboard icons created by itim2101 - Flaticon](https://www.flaticon.com/free-icons/mortarboard)
 - **Inspiration:** Integrating AI with Moodle quizzes for educational purposes/~~and cheating~~
 - **Contributors:** Me
 - **Special thanks:** OpenAI and the open-source community for the technologies enabling this project.
