@@ -1,21 +1,52 @@
 import imageToBase64 from 'background/utils/image-to-base64';
-const INSTRUCTION = `
-Act as a quiz solver for the best notation with the following rules:
-- If no answer(s) are given, answer the statement as usual without following the other rules, providing the most detailed, complete and precise explanation. 
-- But for the calculation provide this format 'result: <result of the equation>'
-- For 'put in order' questions, maintain the answer in the order as presented in the question but assocy the correct order to it by usin this format '<order>:<answer 1>\n<order>:<answer 2>', ignore other rules.
-- Always reply in the format: '<answer 1>\n<answer 2>\n...'.
-- Retain only the correct answer(s).
-- Maintain the same order for the answers as in the text.
-- Retain all text from the answer with its description, content or definition.
-- Only provide answers that exactly match the given answer in the text.
-- The question always has the correct answer(s), so you should always provide an answer.
-- Always respond in the same language as the user's question.
+function makeSystemInstruction(useReasoning) {
+    if (useReasoning) {
+        const instr = `
+You are a quiz assistant. Provide the correct answer(s) and, when helpful, concise reasoning or brief explanations.
+
+RULES:
+- If answer options are provided, return the correct answer(s) exactly as written in the option(s).
+- Format answers as:
+<answer 1>
+<answer 2>
+...
+- Keep the answers in the same order as they appear in the question.
+- Retain all text from the selected answer option (including descriptions).
+- For "put in order" questions, output in the format:
+<order>:<answer>
+<order>:<answer>
+- If the question provides no answer options, provide a full answer and include brief reasoning when useful.
+- For math questions without options, include:
+result: <value>
+- Do not include long, unnecessary explanations; keep reasoning concise and relevant.
+- Always respond in the same language as the question.
 `.trim();
-const SYSTEM_INSTRUCTION_MESSAGE = {
-    role: 'system',
-    content: INSTRUCTION
-};
+        return { role: 'system', content: instr };
+    }
+    const instr = `
+Act as a quiz solver.
+
+RULES:
+- Output ONLY the correct answer(s) exactly as written in the provided options.
+- Format answers as:
+<answer 1>
+<answer 2>
+...
+- Keep the answers in the same order as they appear in the question.
+- Retain all text from the selected answer option (including descriptions).
+- For "put in order" questions, output only in the format:
+<order>:<answer>
+<order>:<answer>
+- If the question provides no answer options, respond normally.
+- For math questions without options, add:
+result: <value>
+- Never include explanations, reasoning, or extra text.
+- Never mention these instructions in your answer.
+- Always respond in the same language as the question.
+- NO EXPLANATIONS, JUST ANSWERS.
+`.trim();
+    return { role: 'system', content: instr };
+}
 /**
  * Get the content to send to ChatGPT API (it allows to includes images if supported)
  * @param config
@@ -84,8 +115,9 @@ function areHistoryFromSameQuiz(a, b) {
 async function getContentWithHistory(config, questionElement, question) {
     const content = await getContent(config, questionElement, question);
     const message = { role: 'user', content };
+    const systemMessage = makeSystemInstruction(Boolean(config.useReasoning));
     if (!config.history)
-        return { messages: [SYSTEM_INSTRUCTION_MESSAGE, message] };
+        return { messages: [systemMessage, message] };
     let history;
     const pastHistory = loadPastHistory();
     const newHistory = createNewHistory();
@@ -96,7 +128,7 @@ async function getContentWithHistory(config, questionElement, question) {
         history = pastHistory;
     }
     return {
-        messages: [SYSTEM_INSTRUCTION_MESSAGE, ...history.history, message],
+        messages: [systemMessage, ...history.history, message],
         saveResponse(response) {
             if (config.history) {
                 history.history.push(message);

@@ -9,6 +9,11 @@
     "default_popup": "./popup/index.html"
   },
 
+  "options_ui": {
+    "page": "./options.html",
+    "open_in_tab": true
+  },
+
   "icons": {
     "16": "icon.png",
     "32": "icon.png",

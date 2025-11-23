@@ -41,16 +41,7 @@ async function getResponse(
       ? config.baseURL.replace(/\/+$/, '')
       : 'https://openrouter.ai';
   const OR_API_URL = `${baseURL}/api/v1/chat/completions`;
-
-  // 🧠 Enforce reasoning format (only addition)
-  const reasoningInstruction = {
-    role: 'system',
-    content: `You are a helpful reasoning assistant. 
-When answering, always include:
-EXPLANATION:
-(Show clear, numbered reasoning steps.)
-FINAL ANSWER: (Give the concise final result.)`
-  };
+  const messagesToSend = [...contentHandler.messages];
 
   const response = await fetch(OR_API_URL, {
     method: 'POST',
@@ -60,7 +51,7 @@ FINAL ANSWER: (Give the concise final result.)`
     },
     body: JSON.stringify({
       model: config.model,
-      messages: [reasoningInstruction, ...contentHandler.messages],
+      messages: messagesToSend,
       max_tokens: config.maxTokens || 200
     }),
     signal: config.timeout ? controller.signal : null

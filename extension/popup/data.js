@@ -11,6 +11,7 @@ export const inputsCheckbox = [
     'history',
     'includeImages'
 ];
+export const inputsCheckboxExtended = [...inputsCheckbox, 'useReasoning'];
 export const mode = document.querySelector('#mode');
 export const modes = mode.querySelectorAll('button');
 //# sourceMappingURL=data.js.map

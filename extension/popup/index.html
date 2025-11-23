@@ -36,6 +36,8 @@
         </div>
       </div>
 
+      <!-- (hidden mode removed) -->
+
       <!-- SETTINGS -->
       <div class="settings" id="settings">
         <div class="line center">
@@ -100,7 +102,12 @@
             <label for="title">Title indication</label>
           </div>
           <div class="line">
-            <input id="cursor" type="checkbox" checked title="Show cursor indicator while generating" />
+            <input
+              id="cursor"
+              type="checkbox"
+              checked
+              title="Show cursor indicator while generating"
+            />
             <label for="cursor">Cursor indication</label>
           </div>
           <div class="line">
@@ -122,12 +129,28 @@
             <label for="infinite">Infinite try</label>
           </div>
           <div class="line">
-            <input id="history" type="checkbox" title="Save question/answer history for the session" />
+            <input
+              id="history"
+              type="checkbox"
+              title="Save question/answer history for the session"
+            />
             <label for="history">Save history</label>
           </div>
           <div class="line">
-            <input id="includeImages" type="checkbox" title="Include image data when supported by the model" />
+            <input
+              id="includeImages"
+              type="checkbox"
+              title="Include image data when supported by the model"
+            />
             <label for="includeImages">Include images</label>
+          </div>
+          <div class="line">
+            <input
+              id="useReasoning"
+              type="checkbox"
+              title="Allow the model to show reasoning/explanations"
+            />
+            <label for="useReasoning">Enable reasoning (longer response)</label>
           </div>
         </div>
       </div>

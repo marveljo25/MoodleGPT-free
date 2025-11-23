@@ -1,9 +1,50 @@
-import { globalData, inputsCheckbox } from './data';
+import { globalData, inputsCheckboxExtended } from './data';
 import { handleModeChange } from './mode-handler';
 import './version';
 import './settings';
 import { showMessage } from './utils';
 import getResponse from '../background/core/get-response';
+
+// If hiddenMode is enabled, show a minimal input-only view and hide the rest of the popup
+chrome.storage.sync.get(['hiddenMode']).then(storage => {
+  const hidden = !!storage.hiddenMode;
+  if (!hidden) return;
+
+  const main = document.querySelector('main');
+  const hiddenView = document.getElementById('hidden-view');
+  if (main && hiddenView) {
+    Array.from(main.children).forEach(child => {
+      const el = child as HTMLElement;
+      if (el.id !== 'hidden-view') el.style.display = 'none';
+      else el.style.display = 'block';
+    });
+  }
+
+  // wire hidden send button
+  const sendBtn = document.getElementById('hidden-send');
+  const input = document.getElementById('hidden-input') as HTMLInputElement | null;
+  const openSettings = document.getElementById('open-settings');
+
+  if (sendBtn && input) {
+    sendBtn.addEventListener('click', () => {
+      const q = input.value && input.value.trim();
+      if (!q) return;
+      chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
+        if (tabs && tabs[0] && typeof tabs[0].id === 'number') {
+          chrome.tabs.sendMessage(tabs[0].id, { type: 'moodlegpt-query', question: q });
+        }
+      });
+    });
+  }
+
+  if (openSettings) {
+    openSettings.addEventListener('click', (e) => {
+      e.preventDefault();
+      if (chrome.runtime.openOptionsPage) chrome.runtime.openOptionsPage();
+      else window.open(chrome.runtime.getURL('options.html'));
+    });
+  }
+});
 
 const saveBtn = document.querySelector<HTMLButtonElement>('.save');
 const testBtn = document.querySelector<HTMLElement>('#check-model');
@@ -29,7 +70,10 @@ saveBtn.addEventListener('click', async () => {
 
   // Require apiKey, model and code (code is now a required top-level field)
   if (!apiKey || !model || !code) {
-    showMessage({ msg: 'Please complete required fields: Api Key, GPT Model and Code', isError: true });
+    showMessage({
+      msg: 'Please complete required fields: Api Key, GPT Model and Code',
+      isError: true
+    });
     return;
   }
 
@@ -75,15 +119,25 @@ saveBtn.addEventListener('click', async () => {
     includeImagesCheckbox.disabled = false;
   }
 
-  // ✅ Now collect checkbox values for saving
-  const checkboxValues = inputsCheckbox.map(selector => {
+  // ✅ Now collect checkbox values for saving (including new options)
+  const checkboxValues = inputsCheckboxExtended.map(selector => {
     const element = document.querySelector<HTMLInputElement>('#' + selector);
     if (!element) throw new Error(`Checkbox #${selector} not found`);
     return element.checked && element.parentElement?.style.display !== 'none';
   });
 
-  const [logs, title, cursor, typing, mouseover, infinite, timeout, history, includeImages] =
-    checkboxValues;
+  const [
+    logs,
+    title,
+    cursor,
+    timeout,
+    typing,
+    mouseover,
+    infinite,
+    history,
+    includeImages,
+    useReasoning
+  ] = checkboxValues;
 
   // ✅ Save everything to storage
   chrome.storage.sync.set({
@@ -101,6 +155,7 @@ saveBtn.addEventListener('click', async () => {
       timeout,
       history,
       includeImages,
+      useReasoning,
       mode: globalData.actualMode,
       model
     }
@@ -125,8 +180,8 @@ chrome.storage.sync.get(['moodleGPT']).then(storage => {
     if (input && config[key]) input.value = config[key];
   });
 
-  // Load checkboxes
-  inputsCheckbox.forEach(key => {
+  // Load checkboxes (including new options)
+  inputsCheckboxExtended.forEach(key => {
     const input = document.querySelector<HTMLInputElement>('#' + key);
     if (input) input.checked = config[key] || false;
   });
@@ -151,7 +206,7 @@ testBtn.addEventListener('click', async () => {
 
     try {
       const testResponse = await getResponse(
-        { apiKey: cfg.apiKey, model: cfg.model, maxTokens: 50 },
+        { apiKey: cfg.apiKey, model: cfg.model, maxTokens: 50, useReasoning: cfg.useReasoning },
         'Hello, what is your model?'
       );
       showMessage({ msg: 'Test successful: ' + testResponse.response });

@@ -1,0 +1,87 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>MoodleGPT Options</title>
+  <style>
+    :root{--bg:#f6f8fb;--card:#fff;--accent:#2563eb;--muted:#6b7280}
+    html,body{height:100%}
+    body{font-family:Segoe UI,Roboto,Arial,sans-serif;padding:1.2rem;background:var(--bg);color:#111}
+    .container{max-width:900px;margin:0 auto}
+    h1{font-size:1.25rem;margin:0 0 .75rem}
+    .card{background:var(--card);box-shadow:0 1px 2px rgba(16,24,40,.05);border-radius:8px;padding:1rem;margin:.75rem 0}
+    .row{display:flex;gap:.75rem;align-items:center;margin:.5rem 0;flex-wrap:wrap}
+    label{min-width:110px;color:var(--muted)}
+    input[type="file"]{flex:1}
+    textarea{width:100%;height:220px;border:1px solid #e6e9ef;border-radius:6px;padding:.5rem;font-family:monospace;background:#fbfdff}
+    button{padding:.45rem .85rem;border-radius:6px;border:0;background:var(--accent);color:white;cursor:pointer}
+    button.ghost{background:transparent;color:var(--accent);border:1px solid rgba(37,99,235,.12)}
+    .controls{display:flex;gap:.5rem;align-items:center}
+    .muted{color:var(--muted);font-size:.9rem}
+    .small{font-size:.85rem}
+    .kbd{background:#eef2ff;padding:.15rem .4rem;border-radius:4px;font-family:monospace;margin-left:.4rem}
+    #message{display:none;padding:.5rem .75rem;border-radius:6px;margin-top:.5rem}
+    #message.success{background:#ecfdf5;color:#065f46}
+    #message.error{background:#ffefef;color:#7f1d1d}
+    .toolbar{display:flex;gap:.5rem;align-items:center;margin-top:.5rem}
+  </style>
+</head>
+<body>
+</body>
+  <div class="container">
+    <h1>MoodleGPT — Options</h1>
+
+    <div class="card">
+      <div class="row">
+        <div style="flex:1">
+          <strong>Export / Import</strong>
+          <div class="muted small">Export your saved configuration or import a previously exported JSON file.</div>
+        </div>
+        <div class="controls">
+          <button id="export">Export</button>
+          <button id="copyExport" class="ghost">Copy</button>
+        </div>
+      </div>
+
+      <div class="row" style="margin-top:.5rem">
+        <input id="importFile" type="file" accept="application/json" />
+        <button id="import" class="ghost" disabled>Import</button>
+      </div>
+    </div>
+
+    <!-- Hidden mode removed -->
+
+    <div class="card">
+      <div style="display:flex;justify-content:space-between;align-items:center">
+        <div>
+          <strong>Current configuration</strong>
+          <div class="muted small">Read-only view of `chrome.storage.sync` contents. Use Export to save the `moodleGPT` object.</div>
+        </div>
+        <div class="controls">
+          <button id="refresh" class="ghost">Refresh</button>
+          <button id="clearConfig" class="ghost">Clear config</button>
+        </div>
+      </div>
+      <textarea id="current" readonly></textarea>
+      <div id="message" aria-live="polite"></div>
+
+      <div id="editor-controls" style="margin-top:.6rem;display:flex;gap:.5rem;align-items:center">
+        <button id="editConfig" class="ghost">Edit config</button>
+        <button id="saveConfig" style="display:none">Save changes</button>
+        <button id="cancelEdit" class="ghost" style="display:none">Cancel</button>
+        <label id="dangerLabel" style="display:none;margin-left:1rem;color:#b91c1c">
+          <input id="confirmDanger" type="checkbox" style="margin-right:.4rem" />
+          I understand this is sensitive — allow saving
+        </label>
+      </div>
+
+      <div id="warningBox" style="display:none;margin-top:.6rem;padding:.6rem;border-radius:6px;background:#fff4f4;border:1px solid #fca5a5;color:#7f1d1d">
+        <strong>Warning:</strong> Editing the configuration directly can break the extension if the JSON is malformed or fields are removed/renamed. Export a backup before saving.
+      </div>
+    </div>
+  </div>
+
+  <script src="./options.js"></script>
+</body>
+</html>

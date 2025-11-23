@@ -14,6 +14,7 @@ type Config = {
   baseURL?: string;
   maxTokens?: number;
   model?: string;
+  useReasoning?: boolean;
 };
 
 export default Config;
